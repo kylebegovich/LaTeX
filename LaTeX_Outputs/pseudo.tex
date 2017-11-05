@@ -1,0 +1,40 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{natbib}
+\usepackage{graphicx}
+
+
+\begin{document}
+
+
+%%%   You can remove or reformat this title block as you see fit
+\title{PSEUDO LaTeX}
+\author{Converter Bot}
+\date{04/11/2017}
+
+\maketitle
+%%%   end title block
+
+
+%%%   This is how you would import images into your document
+%  \begin{figure}[h!]
+%  \centering % optional
+%  \includegraphics[scale=1.7]{file_path_goes_here.extension}
+%  \caption{Caption Goes Here}
+%  \label{fig:figure_name}
+%  \end{figure}
+%%%   End image block
+
+
+split document by line,
+input into the correct block of LaTeX format
+check each line, on insert for the possible tags:
+    first line, if short: \section*{}
+    any subsequent headings: \subsection*{}
+
+    any bulleted lists: \begin{itemize}
+    for each bullet: \item <text_until_newline>
+    break on newline not followed by bullet: \end{itemize}
+
+
+\end{document}
