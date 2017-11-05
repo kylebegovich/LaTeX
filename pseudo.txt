@@ -1,0 +1,6 @@
+split document by line,
+input into the correct block of LaTeX format
+check each line, on insert for the possible tags:
+
+
+    
