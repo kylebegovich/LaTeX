@@ -1,0 +1,36 @@
+﻿GGADGSAJGROVMREGV
+
+
+* Break week, 2 optional lectures this week on Wednesday and Friday, on Pipelining
+   * T GOD…
+   * I will likely still go to these… I need to stop messing up simple stuff in here
+   * And then CS 241 ramps up just in time. Fuck my life - Andrew
+* Exam 5 : Exam 4 :: Lab 8 : Lab 7
+   * Aka, Exam 5 is more advanced MIPS (more advanced version of exam 4)
+* Key idea of forwarding: make things not break by breaking the natural flow of things
+   * If it’s in the last stage (aka MEM/WB)... you can’t get around it by forwarding!!!
+   * Have to STALL (don’t update a stage or so)
+   * Something is converted to a no-op
+* Fundamentally, how do we NOP in the MIPS architecture?
+   * sll $0, $0, 0
+   * Nice property: the instruction code is all zeros!
+      * (00000000000000000000000000000000)2
+   * We should NEVER actually write nop in the code, it happens for us, thankfully <3
+* iClicker beast bites again :(
+* They’re gonna ask how many cycles it will take to execute code… this is scary
+   * Paper notes and Prairie Learn hw table method
+* Branch prediction is pretty dope… I suppose?
+   * If you have a branch instruction, we predict the next instruction, sometimes wrong, but still pretty dope and always worth it
+
+
+1. Gg
+2. Hecc
+   1. Gg
+   2. Ff
+1. Ff
+   1. F
+      1. Gh
+1. D
+   1. F
+      1. G
+dang

@@ -8,3 +8,5 @@ check each line, on insert for the possible tags:
     for each bullet: \item <text_until_newline>
     break on newline not followed by bullet: \end{itemize}
 
+*
+  *heccinhecc
