@@ -1,0 +1,93 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{natbib}
+\usepackage{graphicx}
+
+
+\begin{document}
+
+
+%%%   You can remove or reformat this title block as you see fit
+\title{CLASSNOTES LaTeX}
+\author{Converter Bot}
+\date{05/11/2017}
+
+\maketitle
+%%   end title block
+
+
+%%%   This is how you would import images/figures into your document
+%  \begin{figure}[h!]
+%  \centering % optional
+%  \includegraphics[scale=1.7]{file_path_goes_here.extension}
+%  \caption{Caption Goes Here}
+%  \label{fig:figure_name}
+%  \end{figure}
+%%   End image block
+
+
+%%%
+%   Disclosure: the bot is very basic at this point, and LaTeX offers far, far more features than I've implemented
+%%
+
+
+\section*{﻿Comp Architecture Notes}
+\begin{itemize}
+\item  Make sure you have the handout from yesterday
+\item  ‘X’ value is the ‘?’ value in gtkwave, means that we don’t care what it is
+\item  Cycles:
+\begin{itemize}
+\item  1, filling
+\begin{itemize}
+\item  A PC is initialized (passed in), and does everything in the IF stage
+\item  Waiting at IF/ID
+\end{itemize}
+\item  2, decode
+\begin{itemize}
+\item  PC stuff happens as expected, normally, etc.
+\item  Control oval acts as MIPS decoder, reading from the ‘real’ register
+\item  Waiting at register ID/EX
+\end{itemize}
+\item  3, execute
+\begin{itemize}
+\item  Fill in the signals as you would expect…
+\item  (this is all pretty normal so far, except now it’s spread over 5 steps)
+\item  Remember: the “barriers” are actually ‘registers!’ (in that they block on each clock cycle)ste
+\item  Wait at EX/MEM
+\end{itemize}
+\item  4, memory
+\begin{itemize}
+\item  Do stuff with memory (if you need to)
+\item  Waiting at MEM/WB
+\end{itemize}
+\item  5, write back
+\begin{itemize}
+\item  Basically just pass everything relevant back, write if need to
+\end{itemize}
+\end{itemize}
+\item  We do the example provided on the handout from yesterday (10/23)
+\begin{itemize}
+\item  I’m going to need to scan this (eventually) since apparently I lost mine
+\item  Key idea: the stuff on the right side of each barrier is the values of those controls as it should be, since it was on the left side of the barrier last instruction!
+\end{itemize}
+\item  A “Hazard” of running through branch instructions
+\begin{itemize}
+\item  “We will spend the next 2 lectures on”
+\end{itemize}
+\item  “The state of your program will have dependencies”
+\begin{itemize}
+\item  Not everything can be massively parallel in either hardware OR software!
+\item  We’ll draw dependency arrows from writebacks to accessing
+\begin{itemize}
+\item  Any that go backward in time are dangerous!
+\item  Any that go straight down or forward are fine
+\end{itemize}
+\item  You can access the value as soon as it’s available, not just after the writeback…
+\end{itemize}
+\item  Forwarding 
+\begin{itemize}
+\item  One tactic to circumvent the hazards of branch instructions
+\end{itemize}
+\end{itemize}
+
+\end{document}

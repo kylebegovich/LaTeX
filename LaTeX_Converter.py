@@ -88,7 +88,7 @@ def converter(input_file_path):
     new = reader(input_file_path)
     arr = new.split('\n')
     out_arr = list()
-    heading_cutoff = 20
+    heading_cutoff = 30
 
     tab_size = pre_process(new)
 
