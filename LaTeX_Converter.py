@@ -67,22 +67,47 @@ def converter(input_file_path):
     base = reader("base_text.tex")\
         .replace("replace_with_title", input_file_path.split("/")[-1].split(".")[0].upper())\
         .replace("replace_with_date", time.strftime("%d/%m/%Y"))
-    new = reader(input_file_path)
 
+    new = reader(input_file_path)
     arr = new.split('\n')
     out_arr = list()
+    heading_cutoff = 20
 
-    if len(arr[0]) < 20:
+    if len(arr[0]) < heading_cutoff:
         out_arr.append("\section*{%s}" % arr[0])
     else:
         out_arr.append(arr[0])
 
+    list_depth = 0  # way to track how deep down a nested bullet point list we are
     for i in range(1, len(arr)):
-        if arr[i-1] == "" and len(arr[i]) < 20:
-            make_heading = 1
+        if len(arr[i]) == 0:    # add a line break
+            if list_depth > 0:
+                for j in range(list_depth, 0, -1):
+                    out_arr.append("\end{itemize}")
+                list_depth = 0
+        elif arr[i][0].lstrip(" ").isdigit():
+            out_arr.append("\\\\" + arr[i])
+        elif arr[i][0] == "*":  # part of a list
+            if list_depth == 0:
+                out_arr.append("\\begin{itemize}")
+                out_arr.append("\item " + arr[i].lstrip("*"))
+            elif list_depth == 1:
+                out_arr.append("\item " + arr[i].lstrip("*"))
+            else:
+                for j in range(list_depth, 1, -1):
+                    out_arr.append("\end{itemize}")
+                out_arr.append("\item " + arr[i].lstrip("*"))
+            list_depth = 1
+        elif arr[i-1] == "" and len(arr[i]) < heading_cutoff:  # add a heading
+            out_arr.append("\subsection*{%s}" % arr[i])
 
+        else:
+            out_arr.append(arr[i])
 
-    return base + new + END_DOC_STR
+    out_var = ""
+    for elem in out_arr:
+        out_var += elem + "\n"
+    return base + out_var + END_DOC_STR
 
 
 def main():
@@ -125,9 +150,6 @@ def main():
     print(COMPLETED_MESSAGE)
     [print("LaTeX_Outputs/"+elem) for elem in completed_list]
     print("~~~\n")
-
-
-
 
 
 main()
