@@ -18,24 +18,19 @@ Words and words.
 1. Numbered
 2. List
 3. Of crazy
-   1. Things
-   2. And some
-   3. Subthings
+    1) Things
+    2) And some
+    3) Subthings
 4. But not all
 
 
 * Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas porta justo et diam tempus sol
-* licitudin. Integer tempus, urna sed placerat semper, mi quam fringilla velit, ac por
+    * licitudin. Integer tempus, urna sed placerat semper, mi quam fringilla velit, ac por
 * ta neque magna eget risus.
     * Fusce lectus sem, efficitur
     * ut tortor ut, sollicitudin
     * scelerisque urna. Aliquam
         * erat volutpat.
-*Fusce ligula justo, elementum sed neque sit amet, vehicula viverra justo. Maecenas vestibulum, tortor quis dignissim viverra, orci neque placerat nisi, id efficitur
 *st metus in risus. Morbi porttitor leo at condimentum
-* scelerisque. Sed viverra lectus nibh, vel vulputate diam pharetra
-on. Pellentesque odio nulla, pretium a tortor ullamcorper, porta ullamcorper massa. Curabitur vel aliqua
-m ante. Ut vitae rutrum lorem, vel condimentum odio. Vivamus id mi sit amet purus fermentum cursus interdum quis turpis.
-*Phasellus ut eros vel est bibendum dictum ut sit amet purus. Quisque luctus risus vel lectus tinc
-* dunt venenatis. Aenean nec nisl nec ligula facilisis consequat. Vestibulum quis maximus sapien, sed molestie d
+* scelerisque. Sed viverra lectus nibh, vel vulputate diam pharetra on. Pellentesque odio nulla, pretium a tortor ullamcorper, porta ullamcorper massa. Curabitur vel aliqua m ante. Ut vitae rutrum lorem, vel condimentum odio. Vivamus id mi sit amet purus fermentum cursus interdum quis turpis.
 *am. Cras dapibus magna ac eros ve

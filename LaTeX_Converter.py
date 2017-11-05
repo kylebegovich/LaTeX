@@ -105,45 +105,65 @@ def converter(input_file_path):
             if list_depth > 0:
                 if enumr8:
                     for j in range(list_depth, 0, -1):
-                        out_arr.append("\end{enumerate}\\")
+                        out_arr.append("\end{enumerate}")
                 elif itemize:
                     for j in range(list_depth, 0, -1):
-                        out_arr.append("\end{itemize}\\")
+                        out_arr.append("\end{itemize}")
                 list_depth = 0
-
             enumr8 = False
             itemize = False
-        elif arr[i][0] == '1':
+
+        elif arr[i][0] == '1':  # beginning of numbered list
             enumr8 = True
             out_arr.append("\\begin{enumerate}")
-            out_arr.append("\item " + arr[i][2:])
+            out_arr.append("\item " + arr[i][3:])
+            list_depth = 1
+
         elif enumr8:
-            modified_line = str()
-            for j in range(len(arr[i])):
-                if not arr[i][j].isdigit():
-                    modified_line += arr[i][j]
-                else:
-                    modified_line += arr[i][(j+2):]
-                    break
-            out_arr.append("\item " + modified_line)
-            list_depth = 1
-        elif arr[i][0] == "*":  # part of left-most bulleted list
-            itemize = True
-            out_arr.append("\\begin{itemize}")
-            out_arr.append("\item " + arr[i].lstrip("*"))
-            list_depth = 1
+            tabs_over = 0
+            for j in range(0, len(arr[i]), tab_size):
+                if not arr[i][j] == ' ':
+                    tabs_over = j // tab_size
+
+            #print(tabs_over, list_depth, arr[i])
+            if tabs_over >= list_depth:
+                #print("right", tabs_over, list_depth, tabs_over-list_depth+1)
+                for k in range(tabs_over-list_depth+1):
+                    out_arr.append("\\begin{enumerate}")
+
+            elif tabs_over < list_depth-1:
+                #print("left", tabs_over, list_depth, list_depth-tabs_over)
+                for k in range(list_depth-tabs_over-1):   # check this argument
+                    out_arr.append("\end{enumerate}")
+
+            out_arr.append("\item " + arr[i].lstrip()[3:])
+            list_depth = tabs_over + 1
+
         elif itemize:
             tabs_over = 0
             for j in range(0, len(arr[i]), tab_size):
                 if arr[i][j] == '*':
-                    tabs_over = j / tab_size
-            if tabs_over == list_depth-1:
-                out_arr.append("\item " + arr[i].lstrip("*"))
-            elif tabs_over >= list_depth:
-                go_deeper = 1
-            elif tabs_over < list_depth:
-                climb_up = 1
+                    tabs_over = j // tab_size
+
+            if tabs_over >= list_depth:
+                #print("right", tabs_over, list_depth, tabs_over-list_depth+1)
+                for k in range(tabs_over-list_depth+1):
+                    out_arr.append("\\begin{itemize}")
+
+            elif tabs_over < list_depth-1:
+                #print("left", tabs_over, list_depth, list_depth-tabs_over)
+                for k in range(list_depth-tabs_over-1):   # check this argument
+                    out_arr.append("\end{itemize}")
+
+            out_arr.append("\item " + arr[i].lstrip().lstrip('*'))
+            list_depth = tabs_over + 1
+        elif arr[i][0] == "*":  # part of left-most bulleted list
+            if not itemize:
+                itemize = True
+                out_arr.append("\\begin{itemize}")
+            out_arr.append("\item " + arr[i].lstrip("*"))
             list_depth = 1
+
         elif arr[i-1] == "" and len(arr[i]) < heading_cutoff:  # add a heading
             out_arr.append("\subsection*{%s}" % arr[i])
 
@@ -162,12 +182,17 @@ def main():
 
     args = list(set(sys.argv[1:]))  # actual filepath arguments, removes repeats and the script name
 
+    force = "-f" in args
+    if "-a" in args:
+        args = [f for f in os.listdir('.') if os.path.isfile(f) and f[-4:] == ".txt"]
+
     completed_list = list()
 
     for filepath in args:
 
         if not does_file_exist(filepath):
-            print(IOERROR_MESSAGE + "\n" + BAD_FILE_PATH_MESSAGE)
+            if not filepath == "-f":
+                print(IOERROR_MESSAGE, filepath, "\n" + BAD_FILE_PATH_MESSAGE)
             continue
 
         file_name = str(filepath).split("/")[-1]
@@ -177,7 +202,7 @@ def main():
         print(SUCCESS_MESSAGE)
 
         new_file_name = file_name.split(".")[0] + ".tex"
-        if does_file_exist(new_file_name):
+        if does_file_exist(new_file_name) and not force:
             response = input(OVERWRITE_WARNING)
             if response == "y" or response == "Y":
                 print("Overwritting", new_file_name)

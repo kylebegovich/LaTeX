@@ -6,6 +6,10 @@ Clone or fork this repo, and run the script with the following format:
 
 _python3 LaTeX_Converter.py <file_path> [more_file_paths ...]_
 
+_python3 LaTeX_Converter.py -a -f_
+
+optional additions: -f (ignores file overwrite checks) -a (try to convert every file ending in .txt in current directory)
+
 Make sure that you have python installed, either 2.7 or 3.6 should work. Most bugs will have responses through terminal output that should help. If not, please submit an issue on this GitHub page.
 
 Once you have your .tex files, you can import them (or just copy/paste the content if you're not familiar) into a LaTeX compiler. The one I use and recommend is /www.sharelatex.com
