@@ -101,7 +101,7 @@ def converter(input_file_path):
     enumr8 = False
     itemize = False
     for i in range(1, len(arr)):
-        if len(arr[i]) == 0:    # add a line break
+        if len(arr[i]) == 0:                                  # add a line break, end lists
             if list_depth > 0:
                 if enumr8:
                     for j in range(list_depth, 0, -1):
@@ -113,19 +113,19 @@ def converter(input_file_path):
             enumr8 = False
             itemize = False
 
-        elif arr[i][0] == '1':  # beginning of numbered list
+        elif arr[i][0] == '1':                                  # beginning of numbered list
             enumr8 = True
             out_arr.append("\\begin{enumerate}")
             out_arr.append("\item " + arr[i][3:])
             list_depth = 1
 
-        elif enumr8:
+        elif enumr8:                                            # in the middle of a numbered list
             tabs_over = 0
             for j in range(0, len(arr[i]), tab_size):
-                if not arr[i][j] == ' ':
+                if arr[i][j].isdigit():
                     tabs_over = j // tab_size
 
-            #print(tabs_over, list_depth, arr[i])
+            print(tabs_over, list_depth, arr[i])
             if tabs_over >= list_depth:
                 #print("right", tabs_over, list_depth, tabs_over-list_depth+1)
                 for k in range(tabs_over-list_depth+1):
@@ -139,7 +139,7 @@ def converter(input_file_path):
             out_arr.append("\item " + arr[i].lstrip()[3:])
             list_depth = tabs_over + 1
 
-        elif itemize:
+        elif itemize:                                           # in the middle of a list
             tabs_over = 0
             for j in range(0, len(arr[i]), tab_size):
                 if arr[i][j] == '*':
@@ -164,7 +164,7 @@ def converter(input_file_path):
             out_arr.append("\item " + arr[i].lstrip("*"))
             list_depth = 1
 
-        elif arr[i-1] == "" and len(arr[i]) < heading_cutoff:  # add a heading
+        elif arr[i-1] == "" and len(arr[i]) < heading_cutoff:   # add a heading
             out_arr.append("\subsection*{%s}" % arr[i])
 
         else:
