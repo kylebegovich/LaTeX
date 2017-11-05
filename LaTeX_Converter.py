@@ -215,11 +215,10 @@ def main():
         completed_list.append(new_file_name)
 
 
-
-
     # finish program and print converted files
     print(COMPLETED_MESSAGE)
-    [print("LaTeX_Outputs/"+elem) for elem in completed_list]
+    if completed_list is not None and len(completed_list) > 0:
+        [print("LaTeX_Outputs/"+elem) for elem in completed_list]
     print("~~~\n")
 
 
