@@ -116,19 +116,33 @@ def converter(input_file_path):
         elif arr[i][0] == '1':
             enumr8 = True
             out_arr.append("\\begin{enumerate}")
-            out_arr.append("\item " + arr[i].lstrip("*"))
+            out_arr.append("\item " + arr[i][2:])
         elif enumr8:
-            out_arr.append("\\\\" + arr[i])
+            modified_line = str()
+            for j in range(len(arr[i])):
+                if not arr[i][j].isdigit():
+                    modified_line += arr[i][j]
+                else:
+                    modified_line += arr[i][(j+2):]
+                    break
+            out_arr.append("\item " + modified_line)
+            list_depth = 1
         elif arr[i][0] == "*":  # part of left-most bulleted list
-            if list_depth == 0:
-                out_arr.append("\\begin{itemize}")
+            itemize = True
+            out_arr.append("\\begin{itemize}")
+            out_arr.append("\item " + arr[i].lstrip("*"))
+            list_depth = 1
+        elif itemize:
+            tabs_over = 0
+            for j in range(0, len(arr[i]), tab_size):
+                if arr[i][j] == '*':
+                    tabs_over = j / tab_size
+            if tabs_over == list_depth-1:
                 out_arr.append("\item " + arr[i].lstrip("*"))
-            elif list_depth == 1:
-                out_arr.append("\item " + arr[i].lstrip("*"))
-            else:
-                for j in range(list_depth, 1, -1):
-                    out_arr.append("\end{itemize}\\")
-                out_arr.append("\item " + arr[i].lstrip("*"))
+            elif tabs_over >= list_depth:
+                go_deeper = 1
+            elif tabs_over < list_depth:
+                climb_up = 1
             list_depth = 1
         elif arr[i-1] == "" and len(arr[i]) < heading_cutoff:  # add a heading
             out_arr.append("\subsection*{%s}" % arr[i])
